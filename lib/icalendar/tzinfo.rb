@@ -47,7 +47,7 @@ module TZInfo
       period = period_for_local(date)
       timezone = Icalendar::Timezone.new
       timezone.timezone_id = identifier
-      timezone.add(period.daylight) if period.daylight
+      timezone.add(period.daylight)
       timezone.add(period.standard)
       return timezone
     end
