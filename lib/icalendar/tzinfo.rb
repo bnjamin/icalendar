@@ -47,9 +47,9 @@ module TZInfo
       period = period_for_local(date)
       timezone = Icalendar::Timezone.new
       timezone.timezone_id = identifier
-      timezone.add(period.daylight)
+      timezone.add(period.daylight) if period.daylight
       timezone.add(period.standard)
-      return timezone
+      timezone
     end
   end
 
@@ -90,7 +90,6 @@ module TZInfo
         day.timezone_offset_to = start_transition.offset_to
         day.dtstart = start_transition.dtstart
         day.recurrence_rules = start_transition.rrule
-        day
       else
         return nil unless end_transition
         day.timezone_name = abbreviation.to_s.sub("ST","DT")
@@ -99,6 +98,8 @@ module TZInfo
         day.dtstart = end_transition.dtstart
         day.recurrence_rules = end_transition.rrule
       end
+      
+      day
     end
 
     def standard
@@ -116,7 +117,8 @@ module TZInfo
         std.dtstart = start_transition.dtstart
         std.recurrence_rules = start_transition.rrule
       end
-      return std
+      
+      std
     end
   end
 end
